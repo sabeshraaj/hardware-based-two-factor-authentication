@@ -1,4 +1,4 @@
-# ESP32 Hardware TOTP Authenticator
+![totp_configuration_website](https://github.com/user-attachments/assets/cef3b55a-786a-4ee7-ba6c-3195f549cada)# ESP32 Hardware TOTP Authenticator
 
 A portable, battery-powered Time-based One-Time Password (TOTP) generator built on ESP32 microcontroller. This device provides secure two-factor authentication codes with offline capability and web-based configuration.
 
@@ -33,18 +33,22 @@ A portable, battery-powered Time-based One-Time Password (TOTP) generator built 
 ## 📷 Project Images
 
 ### Device Assembly
-![Breadboard Prototype](./images/1.jpeg)
+![Breadboard Prototype](./1.jpeg)
 *Complete breadboard assembly showing all components and connections*
 
-![Organized Layout](./images/2.jpeg) 
+![Organized Layout](./pin_diagram.png) 
 *Clean wiring layout with proper component placement*
 
 ### Configuration Interface
-![Web Configuration](./images/3.jpeg)
+![Web Configuration](./totp_configuration_website.jpeg)
 *Secure web-based configuration interface with cyberpunk styling*
 
 ### Working Display
-![OLED Display](./images/4.jpeg)
+![OLED Display](./3.jpeg)
+*OLED showing account name, TOTP code, and countdown timer*
+
+### Working Display
+![OLED Display](./4.jpeg)
 *OLED showing account name, TOTP code, and countdown timer*
 
 ## 🔧 Pin Configuration
