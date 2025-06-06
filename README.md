@@ -73,8 +73,8 @@ A portable, battery-powered Time-based One-Time Password (TOTP) generator built 
 ### 1. Environment Setup
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/esp32-totp-generator
-cd esp32-totp-generator
+git clone https://github.com/sabeshraaj/hardware-based-two-factor-authentication
+cd hardware-based-two-factor-authentication
 
 # Install PlatformIO (if not already installed)
 pip install platformio
