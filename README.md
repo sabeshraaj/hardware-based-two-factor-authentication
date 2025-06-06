@@ -1,3 +1,5 @@
+#### ESP32 Hardware TOTP Authenticator
+
 A portable, battery-powered Time-based One-Time Password (TOTP) generator built on ESP32 microcontroller. This device provides secure two-factor authentication codes with offline capability and web-based configuration.
 
 ## 🚀 Features
