@@ -1,137 +1,210 @@
-# Hardware based Two factor authentication (ESP32-Based TOTP Generator)
+# ESP32 Hardware TOTP Authenticator
 
-A secure, hardware-powered Time-based One-Time Password (TOTP) generator built using an ESP32 microcontroller. This device generates TOTP codes compatible with standard two-factor authentication (2FA) systems and presents them on an OLED display.
+A portable, battery-powered Time-based One-Time Password (TOTP) generator built on ESP32 microcontroller. This device provides secure two-factor authentication codes with offline capability and web-based configuration.
 
-## Key Features
+## 🚀 Features
 
-- 🔐 Secure generation of TOTP codes
-- 📱 OLED display with a countdown timer
-- ⚡ WiFi-based real-time synchronization
-- ⏰ Offline timekeeping with an RTC module
-- 🛠️ Web-based configuration interface
-- 🔄 Visual indicator for code validity
-- 💾 Persistent settings storage
-- 🔒 Secure Access Point mode for configuration
-- 🖥️ Serial monitoring for debugging
+### Core Functionality
+- **Secure TOTP Generation**: RFC 6238 compliant time-based one-time passwords
+- **Offline Operation**: Works without internet connection using built-in RTC
+- **Visual Interface**: 128x32 OLED display with countdown progress bar
+- **Battery Powered**: Portable design with lithium-ion battery support
+- **Web Configuration**: Secure setup interface via WiFi Access Point
 
-## Required Hardware
+### Security Features
+- **Hardware-based**: Isolated from smartphone vulnerabilities
+- **Encrypted Storage**: TOTP secrets stored securely in EEPROM
+- **Access Control**: Configuration only available via physical button press
+- **Time Synchronization**: Automatic NTP sync when WiFi available
 
-- ESP32 Development Board
-- SSD1306 OLED Display (128x32)
-- DS1302 RTC Module
-- Push Button
-- Status LED
-- Connecting wires
+## 🛠️ Hardware Components
 
-### Output Preview
+| Component | Function | Connection |
+|-----------|----------|------------|
+| ESP32 DevKit v1 | Main microcontroller | - |
+| SSD1306 OLED (128x32) | Display interface | I2C (SDA/SCL) |
+| DS1302 RTC Module | Offline timekeeping | GPIO 16,17,18 |
+| Push Button | Configuration trigger | GPIO 19 (Pull-up) |
+| Status LED | System indicator | GPIO 23 |
+| TP4056 Module | Battery charging | Power management |
+| MT3608 Booster | Voltage regulation | 3.7V to 5V |
+| 3.7V Li-ion Battery | Portable power | - |
 
-![Output](./output.jpg)
+## 📷 Project Images
 
-### TOTP Configuration Web Interface
+### Device Assembly
+![Breadboard Prototype](./images/1.jpeg)
+*Complete breadboard assembly showing all components and connections*
 
-![totp_configuration_website](./totp_configuration_website.jpg)
+![Organized Layout](./images/2.jpeg) 
+*Clean wiring layout with proper component placement*
 
-### Demonstration
+### Configuration Interface
+![Web Configuration](./images/3.jpeg)
+*Secure web-based configuration interface with cyberpunk styling*
 
-[Watch the video](https://www.youtube.com/watch?v=t_AUBZh5xeY)
+### Working Display
+![OLED Display](./images/4.jpeg)
+*OLED showing account name, TOTP code, and countdown timer*
 
-## Installation Guide
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/sabeshraaj/hardware-based-two-factor-authentication
-   ```
-
-2. Install the necessary libraries in the Arduino IDE:
-   - WiFi
-   - Wire
-   - NTPClient
-   - TOTP
-   - WebServer
-   - Adafruit_GFX
-   - Adafruit_SSD1306
-   - ThreeWire
-   - RtcDS1302
-
-3. Assemble the hardware as per the pin configuration.
-
-4. Upload the firmware to the ESP32 board.
-
-## Configuration Steps
-
-### Initial Setup
-
-1. Power on the device while holding the configuration button to enter Access Point mode.
-2. Connect to the `TOTP_Config_AP` WiFi network (password: `password`).
-3. Open a web browser and go to `192.168.4.1`.
-4. Enter the required configuration details:
-   - Account Name
-   - TOTP Secret Key
-   - WiFi SSID
-   - WiFi Password
-5. Save the settings and restart the device.
-
-### Pin Assignments
+## 🔧 Pin Configuration
 
 ```cpp
-#define CLOCK_PIN 16     // CLK/SCL pin for RTC
-#define DATA_PIN 17      // DAT/SDA pin for RTC
-#define RST_PIN 18      // RST/CE pin for RTC
-#define PUSH_BUTTON 19  // Button for entering configuration mode
-#define STATUS_LED 2    // LED for status indication
+// RTC Module Connections
+#define CLOCK_PIN 16    // DS1302 CLK
+#define DATA_PIN 17     // DS1302 DAT  
+#define RST_PIN 18      // DS1302 RST
+
+// User Interface
+#define PUSH_BUTTON 19  // Config mode button
+#define STATUS_LED 23   // Status indicator
+
+// I2C Display (Default pins)
+// SDA: GPIO 21
+// SCL: GPIO 22
 ```
 
-## How to Use
+## 📦 Installation & Setup
 
-1. Power on the device.
-2. The OLED screen will display:
-   - Account name
-   - Current TOTP code
-   - Countdown timer for code validity
-3. To modify settings, press and hold the push button to enter AP mode.
-4. The status LED provides feedback:
-   - Blinking: Attempting to connect to WiFi
-   - Solid: Successfully connected and operational
-5. View serial output (115200 baud) for:
-   - Startup messages
-   - WiFi connection status
-   - Generated TOTP codes
-   - Debugging details
+### 1. Environment Setup
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/esp32-totp-generator
+cd esp32-totp-generator
 
-## Security Measures
+# Install PlatformIO (if not already installed)
+pip install platformio
 
-- AP mode is accessible only via a physical button press.
-- The web interface is restricted to AP mode.
-- TOTP secrets are securely stored in EEPROM.
+# Build and upload
+pio run --target upload
+```
 
-## Debugging Information
+### 2. Hardware Assembly
+1. Connect components according to the pin diagram
+2. Ensure proper power distribution (3.3V for ESP32, 5V for display)
+3. Test all connections before powering on
 
-The device outputs real-time debugging data via the serial port at a baud rate of 115200. Debugging includes:
-- Device initialization status
-- WiFi connection logs
-- Generated TOTP codes and associated accounts
-- Configuration updates
-- Error logs
+### 3. Initial Configuration
+1. **Enter Config Mode**: Hold the push button while powering on
+2. **Connect to AP**: Join `TOTP_Config_AP` WiFi network (password: `password`)
+3. **Access Interface**: Navigate to `192.168.4.1` in web browser
+4. **Configure Settings**:
+   - Account Name (e.g., "GitHub", "Google")
+   - TOTP Secret Key (from your service provider)
+   - WiFi credentials for internet sync
+5. **Save & Restart**: Device will reboot and begin generating codes
 
-### To View Debug Logs:
+## 🔐 Security Considerations
 
-1. Connect the ESP32 to your computer via USB.
-2. Open the Arduino IDE Serial Monitor or another terminal.
-3. Set the baud rate to 115200.
-4. Monitor real-time logs and debugging messages.
+### Access Control
+- Configuration interface only accessible via physical button
+- Web interface restricted to Access Point connections
+- No remote configuration capabilities
 
-## Contributions
+### Data Protection
+- TOTP secrets encrypted in EEPROM storage
+- No cloud connectivity for sensitive data
+- Local time synchronization with secure NTP
 
-Contributions are welcome! Feel free to submit a Pull Request with improvements or new features.
+### Best Practices
+- Change default AP password in production
+- Use strong WiFi credentials
+- Regularly verify time synchronization
+- Keep device firmware updated
 
-## Credits
+## 💡 Usage Instructions
 
-- ESP32 Development Community
-- Adafruit Industries for OLED libraries
-- Developers of the Arduino TOTP and RTC DS1302 libraries
+### Normal Operation
+1. **Power On**: Device displays account name and current TOTP code
+2. **Read Code**: Use the 6-digit code for authentication
+3. **Monitor Timer**: Progress bar shows remaining validity time
+4. **Code Refresh**: New code generated every 30 seconds
 
-## Support & Issues
+### Status Indicators
+- **LED Blinking**: Attempting WiFi connection
+- **LED Solid**: Connected and synchronized
+- **"AP" on Display**: Access Point mode active
 
-For bug reports, questions, or contributions, please open an issue on the GitHub repository.
+### Troubleshooting
+| Issue | Solution |
+|-------|----------|
+| No display | Check I2C connections and power |
+| Wrong time | Verify NTP sync or RTC battery |
+| WiFi fails | Reconfigure credentials via AP mode |
+| Codes don't work | Verify secret key and time sync |
+
+## 🔧 Development
+
+### Building from Source
+```bash
+# Install dependencies
+pio lib install
+
+# Build project
+pio run
+
+# Upload to device
+pio run --target upload
+
+# Monitor serial output
+pio device monitor --baud 115200
+```
+
+### Code Structure
+- `setup()`: Hardware initialization and configuration loading
+- `loop()`: Main execution cycle (display updates, web server, TOTP generation)
+- `base32_decode()`: Converts Base32 secret keys to binary format
+- `handleRoot()`: Serves configuration web interface
+- `drawWaterLevel()`: Renders countdown progress bar
+
+### Debug Output
+Monitor serial console (115200 baud) for:
+- System initialization status
+- WiFi connection details
+- Generated TOTP codes with timestamps
+- Configuration changes and errors
+
+## 🔄 Advanced Features
+
+### Web Interface
+- **Modern Design**: Cyberpunk-themed responsive interface
+- **Form Validation**: Input verification and error handling
+- **Security**: IP-based access restriction
+- **Mobile Friendly**: Works on smartphones and tablets
+
+### Display Features
+- **Multi-line Layout**: Account name, TOTP code, status indicators
+- **Progress Animation**: Visual countdown with smooth updates
+- **Status Icons**: AP mode and connectivity indicators
+- **Low Power**: Optimized refresh rate for battery life
+
+## 📚 Technical Specifications
+
+- **Microcontroller**: ESP32 (240MHz dual-core)
+- **Memory**: 4MB Flash, 520KB SRAM
+- **Display**: 128x32 OLED (I2C)
+- **Power**: 3.7V Li-ion with boost regulation
+- **Connectivity**: WiFi 802.11 b/g/n
+- **Timekeeping**: DS1302 RTC with backup battery
+- **Dimensions**: Compact breadboard form factor
+
+## 🤝 Contributing
+
+Contributions welcome! Please follow these guidelines:
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+## 🙏 Acknowledgments
+
+- **ESP32 Community** for extensive documentation and examples
+- **Adafruit Industries** for excellent hardware libraries
+- **RFC 6238** authors for TOTP specification
+- **Open Source Contributors** for Arduino ecosystem
 
 ---
+
+**⚠️ Disclaimer**: This device is intended for educational and personal use. Always follow your service provider's security guidelines and maintain backup authentication methods.
