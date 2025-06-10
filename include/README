@@ -1,0 +1,39 @@
+---
+
+This directory is intended for storing project header files.
+
+A **header file** contains C declarations and macro definitions that can be shared across multiple source files in the project. To use a header file in a C or C++ source file (typically located in the `src` folder), include it using the preprocessor directive `#include`:
+
+```c
+// src/main.c
+
+#include "header.h"
+
+int main(void)
+{
+    ...
+}
+```
+
+Including a header file has the same effect as copying its contents into each source file that needs it. However, using header files is cleaner and more maintainable:
+
+* Declarations exist in a single location.
+* Changes only need to be made once.
+* All source files that include the header will automatically use the updated version after recompilation.
+
+This helps reduce duplication, prevents inconsistencies, and simplifies project maintenance.
+
+In C, it’s standard to name header files with a `.h` extension. For maximum portability, use only letters, digits, dashes, and underscores in header file names, and limit to a single dot.
+
+---
+
+Read more in the official GCC documentation:
+
+* [Include Syntax](https://gcc.gnu.org/onlinedocs/cpp/Header-Files.html)
+* [Include Operation](https://gcc.gnu.org/onlinedocs/cpp/Header-Files.html)
+* [Once-Only Headers](https://gcc.gnu.org/onlinedocs/cpp/Header-Files.html)
+* [Computed Includes](https://gcc.gnu.org/onlinedocs/cpp/Header-Files.html)
+
+---
+
+Let me know if you'd like it shortened or adapted for a different audience (e.g., beginner or advanced).
